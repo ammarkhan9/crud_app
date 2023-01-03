@@ -11,19 +11,8 @@ const Todo = () => {
     }
   };
 
-  const handleRemoveBtn = () => {
-    console.log("localStorage is ", localStorage);
-    console.log("Length of list is ", localStorage.list.length);
-
-    if (localStorage.list.length === 2) {
-      return false;
-    } else if (localStorage.list.length > 2) {
-      return true;
-    }
-  };
-
   const [inputDAta, setInputData] = useState("");
-  const [visible, setVisible] = useState(handleRemoveBtn());
+  const [visible, setVisible] = useState(false);
   const [items, setItems] = useState(getLocalItems());
   const [toggleSubmit, setToggleSubmit] = useState(true);
   const [isEditItem, setIsEditItem] = useState(null);
@@ -75,7 +64,6 @@ const Todo = () => {
     const newEditItem = items.find((elem) => {
       return elem.id === id;
     });
-    console.log(newEditItem);
     setToggleSubmit(false);
     setInputData(newEditItem.name);
     setIsEditItem(id);
@@ -98,15 +86,9 @@ const Todo = () => {
           <figcaption>Add Your List Here</figcaption>
         </figure>
         <div className="addItems">
-          <input
-            type="text"
-            placeholder="Add Items"
-            value={inputDAta}
-            onChange={(e) => {
-              setInputData(e.target.value);
-            }}
-            onKeyDown={handleKeyDown}
-          />
+          <input type="text" placeholder="Add Items" value={inputDAta} onChange={(e) => {
+            setInputData(e.target.value)
+            }} onKeyDown={handleKeyDown}/>
           {toggleSubmit ? (
             <i
               className="fa fa-plus add-btn"
@@ -143,16 +125,9 @@ const Todo = () => {
           })}
           ;
         </div>
-        {visible && (
-          <div className="showItems abc">
-            <button
-              className="btn effect04"
-              data-sm-link-text="Remove All"
-              onClick={removeAll}
-            >
-              <span>RemoveAll</span>
-            </button>
-          </div>
+        {visible && (<div className="showItems abc">
+                <button className="btn effect04" data-sm-link-text="Remove All" onClick={removeAll}><span>RemoveAll</span></button>
+                    </div>
         )}
       </div>
     </div>
