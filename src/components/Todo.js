@@ -5,17 +5,19 @@ const Todo = () => {
   const getLocalItems = () => {
     let list = localStorage.getItem("list");
     if (list) {
-      return JSON.parse(localStorage.getItem("list"));
+      return (
+        JSON.parse(localStorage.getItem("list"))
+        );
     } else {
       return [];
     }
   };
 
   const [inputDAta, setInputData] = useState("");
-  const [visible, setVisible] = useState(false);
   const [items, setItems] = useState(getLocalItems());
   const [toggleSubmit, setToggleSubmit] = useState(true);
   const [isEditItem, setIsEditItem] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -76,7 +78,15 @@ const Todo = () => {
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(items));
-  }, [items]);
+  }
+  , [items]);
+
+  useEffect(()=>{
+    let list = localStorage.getItem("list")
+    if (list.length > 2) {
+      setVisible(true)
+    }
+  }, [])
 
   return (
     <div className="main-div">
@@ -123,7 +133,7 @@ const Todo = () => {
               </div>
             );
           })}
-          ;
+          
         </div>
         {visible && (<div className="showItems abc">
                 <button className="btn effect04" data-sm-link-text="Remove All" onClick={removeAll}><span>RemoveAll</span></button>
